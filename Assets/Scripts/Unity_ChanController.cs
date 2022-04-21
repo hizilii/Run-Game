@@ -5,10 +5,12 @@ using UnityEngine;
 public class Unity_ChanController : MonoBehaviour
 {
     Animator animator;
-    
+    // CharacterController controller;
+
     void Start()
     {
         animator=GetComponent<Animator>();
+        // controller=GetComponent<CharacterController>();
     }
 
     void Update()
@@ -28,6 +30,9 @@ public class Unity_ChanController : MonoBehaviour
             transform.Rotate(0,1,0);
         }
 
+        /* // ジャンプ デバッグ用
+        if(Input.GetKeyDown("space")) Jump(); */
+
         // ジャンプ
         if(Input.GetKey("space")){
             animator.SetBool("jump",true);
@@ -35,4 +40,20 @@ public class Unity_ChanController : MonoBehaviour
             animator.SetBool("jump",false);
         }
     }
+
+    /*// ジャンプ
+    public void Jump(){
+        if(controller.isGrounded){
+            animator.SetTrigger("jump");
+        }
+    }
+
+    // ヒット
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.tag=="boss"){
+            animator.SetTrigger("hit");
+            Destroy(hit.gameObject);
+        }
+    } */
 }
