@@ -24,6 +24,7 @@ public class Unity_ChanController : MonoBehaviour
     {
         animator=GetComponent<Animator>();
         controller=GetComponent<CharacterController>();
+
     }
 
     void Update()
@@ -53,6 +54,7 @@ public class Unity_ChanController : MonoBehaviour
 
         // 速度が0以上の時、runのフラグをtrueに
         animator.SetBool("run",moveDirection.z>0.0f);
+
 
         /* // 前進
         if(Input.GetKey("up")){
