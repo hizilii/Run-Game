@@ -20,6 +20,9 @@ public class Unity_ChanController : MonoBehaviour
     public float speedJump;
     public float accelerationZ;
 
+    float countdown=4f;
+    int count;
+
     void Start()
     {
         animator=GetComponent<Animator>();
@@ -34,26 +37,31 @@ public class Unity_ChanController : MonoBehaviour
         if(Input.GetKey("right")) MoveToRight();
         if(Input.GetKey("space")) Jump();
 
-        // Z方向に常に前進
-        float acceleratedZ=moveDirection.z+(accelerationZ*Time.deltaTime);
-        moveDirection.z=Mathf.Clamp(acceleratedZ,0,speedZ);
+        if(countdown>=0){
+            countdown-=Time.deltaTime;
+            count=(int)countdown;
+        }if(countdown<=0){
+            // Z方向に常に前進
+            float acceleratedZ=moveDirection.z+(accelerationZ*Time.deltaTime);
+            moveDirection.z=Mathf.Clamp(acceleratedZ,0,speedZ);
 
-        //X方向は目標のポジションまでの差分の割合で速度を計算
-        float ratioX=(targetLane*LaneWidth-transform.position.x)/LaneWidth;
-        moveDirection.x=ratioX*speedX;
+            //X方向は目標のポジションまでの差分の割合で速度を計算
+            float ratioX=(targetLane*LaneWidth-transform.position.x)/LaneWidth;
+            moveDirection.x=ratioX*speedX;
 
-        // 重力分の力を毎フレーム追加
-        moveDirection.y-=gravity*Time.deltaTime;
+            // 重力分の力を毎フレーム追加
+            moveDirection.y-=gravity*Time.deltaTime;
 
-        // 移動
-        Vector3 globalDirection=transform.TransformDirection(moveDirection);
-        controller.Move(globalDirection*Time.deltaTime);
+            // 移動
+            Vector3 globalDirection=transform.TransformDirection(moveDirection);
+            controller.Move(globalDirection*Time.deltaTime);
 
-        // 移動後接地してたらY方向の速度はリセット
-        if(controller.isGrounded) moveDirection.y=0;
+            // 移動後接地してたらY方向の速度はリセット
+            if(controller.isGrounded) moveDirection.y=0;
 
-        // 速度が0以上の時、runのフラグをtrueに
-        animator.SetBool("run",moveDirection.z>0.0f);
+            // 速度が0以上の時、runのフラグをtrueに
+            animator.SetBool("run",moveDirection.z>0.0f);
+        }
 
 
         /* // 前進
