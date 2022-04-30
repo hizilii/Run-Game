@@ -23,11 +23,17 @@ public class Unity_ChanController : MonoBehaviour
     float countdown=4f;
     int count;
 
+    const int MaxLife=3;
+    int life=MaxLife;
+
     void Start()
     {
         animator=GetComponent<Animator>();
         controller=GetComponent<CharacterController>();
+    }
 
+    public int Life(){
+        return life;
     }
 
     void Update()
@@ -62,30 +68,6 @@ public class Unity_ChanController : MonoBehaviour
             // 速度が0以上の時、runのフラグをtrueに
             animator.SetBool("run",moveDirection.z>0.0f);
         }
-
-
-        /* // 前進
-        if(Input.GetKey("up")){
-            transform.position+=transform.forward*0.01f;
-            animator.SetBool("run",true);
-        }else{
-            animator.SetBool("run",false);
-        } */
-
-
-        /* // 左右回転
-        if(Input.GetKey("left")){
-            transform.Rotate(0,-1,0);
-        }else if(Input.GetKey("right")){
-            transform.Rotate(0,1,0);
-        } */
-
-        /* // ジャンプ
-        if(Input.GetKey("space")){
-            animator.SetBool("jump",true);
-        }else{
-            animator.SetBool("jump",false);
-        } */
     }
 
     // 左のレーンに移動
