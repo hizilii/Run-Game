@@ -6,7 +6,7 @@ public class Unity_ChanController : MonoBehaviour
 {
     const int MinLane=-2;
     const int MaxLane=2;
-    const float LaneWidth=1.0f;
+    const float LaneWidth=0.8f;
 
     Animator animator;
     CharacterController controller;
