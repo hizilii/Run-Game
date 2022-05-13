@@ -24,7 +24,9 @@ public class Unity_ChanController : MonoBehaviour
     int count;
 
     const int MaxLife=3;
+    const float StunDuration=0.5f;
     int life=MaxLife;
+    float recoverTime=0.0f;
 
     void Start()
     {
@@ -34,6 +36,10 @@ public class Unity_ChanController : MonoBehaviour
 
     public int Life(){
         return life;
+    }
+
+    bool IsStun(){
+        return recoverTime>0.0f || life<=0;
     }
 
     void Update()
@@ -47,13 +53,20 @@ public class Unity_ChanController : MonoBehaviour
             countdown-=Time.deltaTime;
             count=(int)countdown;
         }if(countdown<=0){
-            // Z方向に常に前進
-            float acceleratedZ=moveDirection.z+(accelerationZ*Time.deltaTime);
-            moveDirection.z=Mathf.Clamp(acceleratedZ,0,speedZ);
+            if(IsStun()){
+            // 動きを止めてスタンから復帰するタイムをカウント
+            moveDirection.x=0.0f;
+            moveDirection.z=0.0f;
+            recoverTime-=Time.deltaTime;
+            }else{
+                // Z方向に常に前進
+                float acceleratedZ=moveDirection.z+(accelerationZ*Time.deltaTime);
+                moveDirection.z=Mathf.Clamp(acceleratedZ,0,speedZ);
 
-            //X方向は目標のポジションまでの差分の割合で速度を計算
-            float ratioX=(targetLane*LaneWidth-transform.position.x)/LaneWidth;
-            moveDirection.x=ratioX*speedX;
+                //X方向は目標のポジションまでの差分の割合で速度を計算
+                float ratioX=(targetLane*LaneWidth-transform.position.x)/LaneWidth;
+                moveDirection.x=ratioX*speedX;
+            }
 
             // 重力分の力を毎フレーム追加
             moveDirection.y-=gravity*Time.deltaTime;
@@ -72,15 +85,18 @@ public class Unity_ChanController : MonoBehaviour
 
     // 左のレーンに移動
     public void MoveToLeft(){
+        if(IsStun()) return;
         if(controller.isGrounded && targetLane>MinLane) targetLane--;
     }
 
     // 右のレーンに移動
     public void MoveToRight(){
+        if(IsStun()) return;
         if(controller.isGrounded && targetLane<MaxLane) targetLane++;
     }
 
     public void Jump(){
+        if(IsStun()) return;
         if(controller.isGrounded){
             moveDirection.y=speedJump;
 
@@ -88,12 +104,18 @@ public class Unity_ChanController : MonoBehaviour
         }
     }
 
-    /* // ヒット
+    // ユニティちゃん衝突時
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(hit.gameObject.tag=="boss"){
+        if(IsStun()) return;
+
+        if(hit.gameObject.tag=="Enemy"){
+            life--;
+            recoverTime=StunDuration;
+
             animator.SetTrigger("hit");
+            
             Destroy(hit.gameObject);
         }
-    } */
+    } 
 }

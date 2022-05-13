@@ -1,31 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject ChoicesTest;
-    public GameObject LeftButton;
-    public GameObject RightButton;
+    public Unity_ChanController Unity_Chan;
+    public LifePanel lifePanel;
 
-    void Start()
-    {
-        ChoicesTest.SetActive(false);
-        LeftButton.SetActive(false);
-        RightButton.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider collider){
-        if(collider.gameObject.tag=="Player"){
-            ChoicesTest.SetActive(true);
-            LeftButton.SetActive(true);
-            RightButton.SetActive(true);
-        }
+    public void Update(){
+        //ライフパネル更新
+        lifePanel.UpdateLife(Unity_Chan.Life());
     }
 }

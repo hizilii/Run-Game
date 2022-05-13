@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MoveScene : MonoBehaviour
+public class MoveScene2 : MonoBehaviour
 {
     public void OnStartButtonClicked()
     {
-        SceneManager.LoadScene("StageSelectScene");
+        SceneManager.LoadScene("Level2Stage");
     }
 }
+
