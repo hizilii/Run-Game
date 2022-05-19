@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Unity_ChanController : MonoBehaviour
 {
-    const int MinLane=-2;
-    const int MaxLane=2;
-    const float LaneWidth=0.8f;
+    const int MinLane=-1;
+    const int MaxLane=1;
+    const float LaneWidth=1.5f;
 
     Animator animator;
     CharacterController controller;
@@ -24,8 +24,10 @@ public class Unity_ChanController : MonoBehaviour
     int count;
 
     const int MaxLife=3;
+    const int MinOnigiri=0;
     const float StunDuration=0.5f;
     int life=MaxLife;
+    int onigiri=MinOnigiri;
     float recoverTime=0.0f;
 
     void Start()
@@ -36,6 +38,10 @@ public class Unity_ChanController : MonoBehaviour
 
     public int Life(){
         return life;
+    }
+
+    public int Onigiri(){
+        return onigiri;
     }
 
     bool IsStun(){
@@ -113,9 +119,24 @@ public class Unity_ChanController : MonoBehaviour
             life--;
             recoverTime=StunDuration;
 
-            animator.SetTrigger("hit");
+            if(life==0){
+                animator.SetTrigger("death");
+            }else{
+                animator.SetTrigger("hit");
+            }
             
             Destroy(hit.gameObject);
         }
-    } 
+
+        if(hit.gameObject.tag=="Item"){
+            onigiri++;
+
+            if(onigiri==5){
+                life++;
+                onigiri=0;
+            }
+
+            Destroy(hit.gameObject);
+        }
+    }
 }

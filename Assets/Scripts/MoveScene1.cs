@@ -7,7 +7,7 @@ public class MoveScene1 : MonoBehaviour
 {
     public void OnStartButtonClicked()
     {
-        SceneManager.LoadScene("Level1Stage");
+       FadeManager.Instance.LoadScene("Level1Stage",1.0f);
     }
 }
 

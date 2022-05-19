@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1Stage.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/EndlessRun.unity
+    guid: 69847b0d3370976499a0c027563c4f36
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene_Level1.unity
+    guid: cfb017db98c896946b9c89a0b9bb5812
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene_EndlessRun.unity
+    guid: 28cf9f7e406cb3e4db3647a206b28957
+  - enabled: 1
+    path: Assets/Scenes/GameClearScene.unity
+    guid: 3820c46c25e4c7c4aa97161bfd7addc2
   m_configObjects: {}

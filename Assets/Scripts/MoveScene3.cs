@@ -7,7 +7,7 @@ public class MoveScene3 : MonoBehaviour
 {
     public void OnStartButtonClicked()
     {
-        SceneManager.LoadScene("EndlessRunStage");
+        FadeManager.Instance.LoadScene("EndlessRun",1.0f);
     }
 }
 
